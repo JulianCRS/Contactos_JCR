@@ -1,18 +1,14 @@
-# Python
+# Entorno virtual Python
+venv/
 .venv/
+
+# Node_modules Angular
+frontend/node_modules/
+
+# Archivos temporales
 __pycache__/
 *.pyc
+
+# Archivos de entorno
 .env
-contacts.db
-.coverage
-
-# Node
-node_modules/
-
-# VSCode
-.vscode/
-
-# Sistema
-.DS_Store
-Thumbs.db
 
