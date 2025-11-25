@@ -1,0 +1,123 @@
+<div class="form-container">
+  <h2>{{ isEditing ? 'Editar' : 'Nuevo' }} Contacto</h2>
+
+  <div class="form-instructions" *ngIf="!isEditing">
+    <p>Para crear un nuevo contacto necesitas:</p>
+    <ul>
+      <li [class.completed]="form.get('nombre')?.valid">Nombre del contacto</li>
+      <li [class.completed]="form.get('telefono')?.valid">Número de teléfono</li>
+      <li class="optional">Email (Opcional)</li>
+      <li class="optional">Dirección (opcional)</li>
+      <li class="optional">Lugar (opcional)</li>
+      <li class="optional">Tipo de Contacto (opcional)</li>
+      <li class="optional">Detalle del Tipo (opcional)</li>
+    </ul>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Cargando...
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+      <label>Nombre:</label>
+      <input formControlName="nombre" type="text" placeholder="Ingresa el nombre" />
+      <div *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched" class="error">
+        El nombre es obligatorio.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Teléfono:</label>
+      <input formControlName="telefono" type="text" placeholder="Ej: +573001234567" />
+      <div *ngIf="form.get('telefono')?.errors?.['pattern'] && form.get('telefono')?.touched" class="error">
+        El teléfono debe tener entre 7 y 15 dígitos, opcionalmente con el símbolo +
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Email:</label>
+      <input formControlName="email" type="email" placeholder="Ingresa el email" />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="error">
+        El email no es válido.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label>Dirección:</label>
+      <input formControlName="direccion" type="text" placeholder="Ingresa la dirección" />
+    </div>
+
+    <div class="form-field">
+      <label>Lugar:</label>
+      <input formControlName="lugar" type="text" placeholder="Ingresa el lugar" />
+    </div>
+
+    <div class="form-field">
+      <label>Tipo de Contacto:</label>
+      <select formControlName="tipo_contacto">
+        <option value="">Seleccione un tipo</option>
+        <option *ngFor="let option of tipoContactoOptions" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-field" *ngIf="form.get('tipo_contacto')?.value === 'Otro'">
+      <label>Especifique el tipo:</label>
+      <input formControlName="tipo_contacto_otro" type="text" placeholder="Especifique el tipo de contacto">
+    </div>
+
+    <div class="form-field" *ngIf="form.get('tipo_contacto')?.value">
+      <label>Detalle del tipo:</label>
+      <select formControlName="detalle_tipo">
+        <option value="">Seleccione un detalle</option>
+        <option *ngFor="let option of getDetalleTipoOptions(form.get('tipo_contacto')?.value)" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-field" *ngIf="form.get('detalle_tipo')?.value === 'Otro'">
+      <label>Especifique el detalle:</label>
+      <input formControlName="detalle_tipo_otro" type="text" placeholder="Especifique el detalle">
+    </div>
+
+    <div class="form-field image-upload">
+      <label>Foto del contacto:</label>
+      <label class="image-upload-button">
+        <i class="fas fa-camera"></i>
+        {{ hasExistingImage ? 'Cambiar foto' : 'Subir foto' }}
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        >
+      </label>
+      <div class="image-preview" *ngIf="imagePreview">
+        <img [src]="imagePreview" 
+             [alt]="hasExistingImage ? 'Foto actual del contacto' : 'Vista previa'"
+             (error)="imagePreview = 'assets/images/default-avatar.png'">
+      </div>
+      <div *ngIf="imageError" class="error">
+        {{ imageError }}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="form.invalid">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
+      <button type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <div class="error-icon">⚠️</div>
+      <div class="error-content">
+        <h4>Error al procesar la solicitud</h4>
+        <p [innerHTML]="errorMessage | nl2br"></p>
+      </div>
+    </div>
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  </form>
+</div>

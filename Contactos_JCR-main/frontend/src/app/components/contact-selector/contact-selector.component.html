@@ -1,0 +1,27 @@
+<div class="selector-container">
+  <div class="selector-header">
+    <h3>Seleccionar Destinatarios</h3>
+    <button class="close-button" (click)="onClose()">×</button>
+  </div>
+
+  <app-contact-filter (filterChange)="onFilterChange($event)"></app-contact-filter>
+
+  <div class="contacts-grid">
+    <div *ngFor="let contact of filteredContacts" class="contact-card">
+      <div class="contact-info">
+        <h4>{{ contact.nombre }}</h4>
+        <p>{{ contact.email }}</p>
+      </div>
+      <button class="add-button" 
+              (click)="onAdd(contact)"
+              [disabled]="!contact.email">
+        <i class="fas fa-plus"></i>
+        Añadir
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="filteredContacts.length === 0" class="no-results">
+    No se encontraron contactos con email.
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="filter-container">
+  <h3 class="filter-title">Filtrar contactos</h3>
+
+  <div class="search-box">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onFilterChange()"
+      placeholder="Buscar por nombre, teléfono o email..."
+      aria-label="Buscar contactos"
+    >
+    <div class="search-icon"></div>
+  </div>
+
+  <div class="filter-bottom-section">
+    <div class="filter-select">
+      <label for="tipo-contacto-select">Tipo de Contacto</label>
+      <select id="tipo-contacto-select" [(ngModel)]="selectedTipoContacto" (ngModelChange)="onFilterChange()">
+        <option value="">Todos los tipos</option>
+        <option *ngFor="let option of tipoContactoOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+
+    <div class="filter-select" *ngIf="selectedTipoContacto">
+      <label for="detalle-tipo-select">Detalle del Tipo</label>
+      <select id="detalle-tipo-select" [(ngModel)]="selectedDetalleTipo" (ngModelChange)="onFilterChange()">
+        <option value="">Todos los detalles</option>
+        <option *ngFor="let option of detalleTipoMapping[selectedTipoContacto]" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+
+    <button
+      class="reset-button"
+      (click)="resetFilters()"
+      [disabled]="!isFiltering()"
+    >
+      Reiniciar filtros
+    </button>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+:root {
+  // Paleta de colores principal
+  --color-mocha: #927B69;
+  --color-purple-basil: #4E2D3E;
+  --color-future-dusk: #7C677F;
+
+  // Variaciones
+  --color-mocha-light: #A89184;
+  --color-mocha-dark: #75614F;
+  --color-purple-basil-light: #6A4359;
+  --color-future-dusk-light: #998A9C;
+
+  // Colores funcionales
+  --color-background: #F5F2F0;
+  --color-surface: #FFFFFF;
+  --color-primary: var(--color-purple-basil);
+  --color-secondary: var(--color-future-dusk);
+  --color-accent: var(--color-mocha);
+
+  // Texto
+  --color-text: #2D2D2D;
+  --color-text-light: #FFFFFF;
+  --color-text-muted: #6B6B6B;
+
+  // Sombras
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+
+  // Espaciado
+  --spacing-unit: 8px;
+  --spacing-xs: calc(var(--spacing-unit) * 0.5);
+  --spacing-sm: var(--spacing-unit);
+  --spacing-md: calc(var(--spacing-unit) * 2);
+  --spacing-lg: calc(var(--spacing-unit) * 3);
+  --spacing-xl: calc(var(--spacing-unit) * 4);
+
+  // Bordes
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  // Transiciones
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Estados y Feedback */
+  --color-error: #D32F2F;
+  --color-success: #2E7D32;
+  --color-warning: #F57C00;
+  --color-focus-ring: rgba(78, 45, 62, 0.1); /* Antes era azul */
+}
+
+[data-theme="dark"] {
+  --color-background: #1E1B1A;
+  --color-surface: #2D2826;
+  --color-text: #F5F2F0;
+  --color-text-muted: #A89184;
+  --color-primary: var(--color-purple-basil-light);
+  --color-secondary: var(--color-future-dusk-light);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+}

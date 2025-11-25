@@ -1,0 +1,45 @@
+<div class="reviews-overlay" (click)="onClose()">
+  <div class="reviews-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Historial de Calificaciones - {{contact.nombre}}</h3>
+      <button class="close-button" (click)="onClose()">×</button>
+    </div>
+
+    <div class="reviews-content">
+      <!-- Calificación general -->
+      <div class="average-rating">
+        <h4>Calificación General</h4>
+        <div class="rating-display">
+          <app-rating
+            [value]="contact.averageRating || 0"
+            [readonly]="true"
+            [showValue]="true">
+          </app-rating>
+          <span class="average-value">{{contact.averageRating?.toFixed(1) || '0'}}/5</span>
+        </div>
+      </div>
+
+      <!-- Lista de calificaciones -->
+      <div *ngIf="groupedReviews.length === 0" class="no-reviews">
+        No hay calificaciones registradas
+      </div>
+
+      <div class="reviews-list">
+        <div *ngFor="let review of groupedReviews" class="review-item">
+          <div class="review-header">
+            <div class="review-date">{{review.fecha | date:'dd/MM/yyyy HH:mm'}}</div>
+            <div class="review-rating">
+              <app-rating
+                [value]="review.calificacionPromedio"
+                [readonly]="true"
+                [showValue]="true">
+              </app-rating>
+              <span class="rating-value">{{review.calificacionPromedio.toFixed(1)}}/5</span>
+            </div>
+          </div>
+          <p class="review-comment">{{review.comentario}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

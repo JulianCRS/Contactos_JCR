@@ -1,0 +1,70 @@
+<div class="app-container" [attr.data-theme]="theme">
+  <header class="app-header">
+    <div class="header-content">
+      <h1 class="app-title">
+        <i class="fas fa-address-book"></i>
+        App de Contactos
+        <span *ngIf="isLoggedIn" class="user-greeting">
+          ¡Hola, {{ username }}!
+        </span>
+      </h1>
+      <div class="header-actions">
+        <button
+          class="btn btn-theme"
+          (click)="toggleTheme()"
+          [attr.aria-label]="theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+          <i [class]="theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'"></i>
+        </button>
+        <button
+          *ngIf="isLoggedIn"
+          class="btn btn-logout"
+          (click)="logout()"
+          aria-label="Cerrar sesión">
+          <i class="fas fa-sign-out-alt"></i>
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <!-- Sidebar y botón solo visible si está logueado -->
+    <ng-container *ngIf="isLoggedIn">
+      <!-- Botón toggle -->
+      <button class="toggle-sidebar-button" (click)="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+        {{ isSidebarOpen ? 'Cerrar Opciones' : 'Opciones' }}
+      </button>
+
+      <div class="sidebar" [class.sidebar-open]="isSidebarOpen">
+        <div class="sidebar-header">
+          <h3>Opciones</h3>
+        </div>
+        <div class="sidebar-content">
+          <button class="sidebar-option" routerLink="/contactos" (click)="toggleSidebar()">
+            <i class="fas fa-address-book"></i>
+            Lista de Contactos
+          </button>
+          <button class="sidebar-option" routerLink="/dashboard" (click)="toggleSidebar()">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+          </button>
+          <button class="sidebar-option" routerLink="/email" (click)="toggleSidebar()">
+            <i class="fas fa-envelope"></i>
+            Enviar correo
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+    <main class="main-content" [class.with-sidebar]="isSidebarOpen">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      © {{ currentYear }} App de Contactos. Todos los derechos reservados.
+    </div>
+  </footer>
+</div>

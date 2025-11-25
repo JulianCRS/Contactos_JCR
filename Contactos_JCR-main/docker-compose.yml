@@ -1,0 +1,8 @@
+services:
+  backend:
+    build: ./backend   # Le dice a Docker que construya el contenedor usando el Dockerfile del backend
+    env_file: ./backend/.env  # Carga las variables de entorno desde el archivo .env
+    ports:
+      - "8000:8000"  # Mapea el puerto 8000 de tu máquina local al contenedor
+    volumes:
+      - ./backend:/app  # Monta la carpeta del backend en el contenedor

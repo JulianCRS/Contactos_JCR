@@ -1,0 +1,85 @@
+<div class="email-container">
+  <div class="email-header">
+    <h2>Redactar Correo</h2>
+  </div>
+
+  <div class="email-content">
+    <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <label>Destinatarios:</label>
+        <div class="recipients-list">
+          <div *ngFor="let recipient of selectedRecipients" class="recipient-tag">
+            {{ recipient }}
+            <button type="button" (click)="removeRecipient(recipient)">×</button>
+          </div>
+        </div>
+        <button type="button" class="add-recipient-button" (click)="toggleContactSelector()">
+          <i class="fas fa-user-plus"></i>
+          Añadir receptor
+        </button>
+      </div>
+
+      <div class="form-field">
+        <label>Asunto:</label>
+        <input formControlName="subject" type="text" placeholder="Ingrese el asunto">
+      </div>
+
+      <div class="form-field">
+        <label>Mensaje:</label>
+        <textarea formControlName="message" placeholder="Escriba su mensaje"></textarea>
+      </div>
+
+      <div class="form-field">
+        <label>Adjuntos:</label>
+        <div class="file-input-container">
+          <label class="file-input-button">
+            <i class="fas fa-paperclip"></i>
+            Seleccionar archivos
+            <input
+              type="file"
+              (change)="onFilesSelected($event)"
+              multiple
+              style="display: none;">
+          </label>
+        </div>
+        <div class="selected-files" *ngIf="selectedFiles.length > 0">
+          <div *ngFor="let file of selectedFiles; let i = index" class="file-item">
+            <span>{{ file.name }}</span>
+            <button type="button" (click)="removeFile(i)" class="remove-file">×</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit"
+                class="submit-button"
+                [disabled]="emailForm.invalid || selectedRecipients.length === 0 || loading">
+          <i class="fas fa-paper-plane"></i>
+          {{ loading ? 'Enviando...' : 'Enviar correo' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Contenedor de notificaciones -->
+  <div class="notification-container" *ngIf="successMessage || errorMessage">
+    <div *ngIf="successMessage" class="notification success-notification">
+      <i class="fas fa-check-circle"></i>
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="notification error-notification">
+      <i class="fas fa-exclamation-circle"></i>
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>
+
+<!-- Pop-up selector de contactos -->
+<div *ngIf="showContactSelector" class="contact-selector-overlay" (click)="toggleContactSelector()">
+  <div class="contact-selector-modal" (click)="$event.stopPropagation()">
+    <app-contact-selector
+      (recipientSelected)="addRecipient($event)"
+      (close)="toggleContactSelector()">
+    </app-contact-selector>
+  </div>
+</div>

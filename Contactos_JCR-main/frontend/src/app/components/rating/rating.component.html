@@ -1,0 +1,18 @@
+<div class="rating" [class.readonly]="readonly" [class.small]="size === 'small'">
+  <div class="stars">
+    <button *ngFor="let star of [1,2,3,4,5]"
+            type="button"
+            class="star-btn"
+            [class.filled]="star <= (hoverValue || value)"
+            [class.half]="isHalfStar(star)"
+            (mouseenter)="!readonly && onHover(star)"
+            (mouseleave)="!readonly && onHover(value)"
+            (click)="!readonly && onRate(star)"
+            [disabled]="readonly || disabled">
+      <i class="fas fa-star"></i>
+    </button>
+  </div>
+  <span *ngIf="showValue" class="rating-value">
+    {{value ? value.toFixed(1) : '0.0'}}
+  </span>
+</div>
