@@ -84,6 +84,12 @@ def get_user_by_email(db: Session, email: str):
     return db.query(models_db.User).filter(models_db.User.email == email).first()
 
 def create_user(db: Session, user: schemas.UserCreate):
+    
+    print("=== create_user ===")
+    print("Password recibido en CRUD:", user.password)
+    print("Tipo:", type(user.password))
+    print("Longitud:", len(user.password))
+    
     hashed_password = get_password_hash(user.password)
     db_user = models_db.User(
         email=user.email,

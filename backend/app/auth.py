@@ -22,6 +22,10 @@ def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password):
+    print("Password raw:", repr(password))
+    print("Password bytes length:", len(password.encode('utf-8')))
+    print("Password type:", type(password))
+    print("Password value:", password)
     return pwd_context.hash(password)
 
 def create_access_token(data: dict):

@@ -9,6 +9,13 @@ router = APIRouter()
 
 @router.post("/signup", response_model=schemas.Token)
 def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
+
+    print("=== SIGNUP ===")
+    print("Email recibido:", user.email)
+    print("Password recibido:", user.password)
+    print("Longitud del password:", len(user.password))
+    print(type(user.password))
+
     try:
         db_user = crud.create_user(db, user)
         access_token = create_access_token(data={"sub": db_user.email})
